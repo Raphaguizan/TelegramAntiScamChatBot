@@ -50,7 +50,7 @@ def get_session_history(user_id: str) -> FileChatMessageHistory:
     return FileChatMessageHistory(caminho)
 
 # Inicialização do modelo de linguagem
-llm = ChatGroq(model="llama3-8b-8192")
+llm = ChatGroq(model="llama3-8b-8192", temperature=1.2)
 
 chain = prompt | llm
 
