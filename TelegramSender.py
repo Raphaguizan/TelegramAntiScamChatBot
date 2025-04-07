@@ -1,10 +1,14 @@
 import os
 import asyncio
 import random
+
 from dotenv import find_dotenv, load_dotenv
+
 from telethon import TelegramClient, events, sync
 from telethon.tl.functions.messages import SetTypingRequest
 from telethon.tl.types import SendMessageTypingAction
+
+from ChatLLM import generate_answers
 
 #pegar credenciais
 load_dotenv(find_dotenv())
@@ -41,7 +45,7 @@ async def handle_message(event):
         print(f"📩 Mensagem de {sender.first_name}: {msg}")
 
         # Frase de resposta
-        resposta = "Hmm... interessante. Pode me explicar melhor isso?"
+        resposta = generate_answers(msg, user_id=sender_id)
 
         # Tempo de "pensando"
         pensando = random.uniform(1.0, 2.0) # MUDAR PARA UM TEMPO MAIOR DEPOIS
