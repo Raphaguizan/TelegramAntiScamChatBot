@@ -1,110 +1,100 @@
-# 🤖 Raphael, o Vovô no Telegram
+# 🤖 Raphael, o Vovô do Telegram
 
-Raphael é um simpático senhor de 65 anos que conversa com você no Telegram como se fosse gente de verdade. Ele é confuso com tecnologia, vive se atrapalhando com as palavras, e adora pedir ajuda ao sobrinho. Esse projeto usa uma LLM (via LangChain com Groq API) para simular a personalidade do vovô, mantendo histórico de conversa por usuário.
+Raphael é um simpático senhor idoso de Xique-Xique (Bahia), que conversa com você pelo Telegram como se fosse um vovô de verdade! Ele se enrola com tecnologia, fala do rádio de válvula, pede ajuda ao sobrinho, e comete erros de digitação engraçados.
 
----
-
-## 🚀 Funcionalidades
-
-- Respostas com personalidade de um senhor idoso brasileiro, morador de Xique-Xique, Bahia.
-- Mensagens com erros de digitação leves, memórias nostálgicas e emojis.
-- Estilo de bate-papo do Telegram, com mensagens curtas, informais e engraçadas.
-- Armazenamento do histórico de conversa por usuário em arquivos locais.
+O projeto é uma LLM personalizada que conversa com os usuários em tom leve, carismático e sempre com muita confusão tecnológica 😅
 
 ---
 
-## 📂 Estrutura do Projeto
+## 📁 Estrutura do Projeto
 
 ```
-/
-├── memories/                  # Armazena o histórico das conversas por user_id
-├── ChatLLM.py                 # Configuração e execução da LLM com persona Raphael
-├── TelegramSender.py          # Escuta e responde mensagens no Telegram
-├── requirements.txt           # Lista de dependências
-├── .env                       # Contém a GROQ_API_KEY
-└── README.md                  # Este arquivo
+ChatTelegram/
+├── bot.py                # Integração com o bot oficial do Telegram (python-telegram-bot)
+├── TelegramSender.py     # Integração com Telethon
+├── ChatLLM.py            # Configuração da LLM e função generate_answers
+├── requirements.txt      # Dependências do projeto
+├── memories/             # Pasta onde ficam os históricos de conversa por usuário
+└── .env                  # Arquivo de variáveis de ambiente (GROQ_API_KEY)
 ```
 
 ---
 
-## 🤖 Como funciona
+## ⚙️ Requisitos
 
-O `ChatLLM.py` define o comportamento de Raphael e conecta com a LLM via LangChain. A função `generate_answers`:
+- Python 3.10+
+- Conta na [Groq](https://console.groq.com/) com uma API Key
+- Crie um bot com o [BotFather](https://t.me/botfather) no Telegram para usar o `bot.py`
 
-- Recebe a mensagem do usuário e seu `user_id`
-- Encapsula como `HumanMessage`
-- Usa `RunnableWithMessageHistory` para manter o contexto entre mensagens
-- Gera uma resposta com a "voz" do vovô Raphael
+Instale as dependências com:
 
-O `TelegramSender.py`:
-
-- Usa Telethon para escutar mensagens no Telegram
-- Redireciona as mensagens para `generate_answers`
-- Envia a resposta de volta ao usuário
-
----
-
-## 📚 Prompt de Raphael
-
-O prompt define que Raphael:
-
-- Tem 65 anos, mora em Xique-Xique, Bahia
-- Fala de forma leve, com erros ocasionais (ex: "inteenet", "zaptzap")
-- Comenta sobre coisas antigas como rádio de válvula, vitrola, etc
-- Usa emojis naturalmente (ex: 👴📱😅)
-- Nunca se refere a si como IA ou chatbot
-- Evita iniciar cada mensagem com "oi"
-
----
-
-## ⚙️ Instalação
-
-1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/raphael-vovo-telegram.git
-cd raphael-vovo-telegram
-```
-
-2. Crie um ambiente virtual e instale as dependências:
-```bash
-python -m venv .venv
-source .venv/bin/activate  # ou .venv\Scripts\activate no Windows
 pip install -r requirements.txt
 ```
 
-3. Crie um arquivo `.env` com sua chave da Groq API:
-```
-GROQ_API_KEY=sua_chave_aqui
+No arquivo `.env`, adicione sua chave da API da Groq:
+```env
+GROQ_API_KEY=your_key_here
 ```
 
-4. Execute o bot:
+---
+
+## 🚀 Como usar
+
+### 1. Usando com Telethon (`TelegramSender.py`)
+
+Este modo usa a biblioteca Telethon para escutar mensagens privadas enviadas ao bot e responder com a LLM.
+
 ```bash
 python TelegramSender.py
 ```
 
----
+Você precisará inserir seu `api_id` e `api_hash` do Telegram na primeira execução. O script salva a sessão.
 
-## 🌟 Exemplos de Resposta
+### 2. Usando com Bot oficial (`bot.py`)
 
-> "Ah, esse tal de *memê*... como é que usa isso mesmo? 🤔"
+Este modo usa a biblioteca oficial `python-telegram-bot`. Basta inserir o token do bot no `.env`:
 
-> "Hmmm... espera... esqueci o que ia dizer 😅"
+```env
+BOT_TOKEN=your_telegram_bot_token
+```
 
-> "Meu sobrinho mexe nessas coisa de zap, eu não entendo muito bem..."
+Depois, execute:
 
----
+```bash
+python bot.py
+```
 
-## ✏️ Contribuição
-
-Se quiser melhorar a personalidade do Raphael, adicionar novas frases ou formas de expressão, sinta-se livre para abrir um PR!
-
----
-
-## 👁️ Licença
-
-Este projeto está licenciado sob a MIT License. Consulte o arquivo LICENSE para mais detalhes.
+O Raphael responderá automaticamente a mensagens privadas enviadas ao bot.
 
 ---
 
-🥴 "Agora deixa eu ver onde foi que eu botei meus óculos..."
+## 🤖 Sobre o Raphael
 
+- Mora em Xique-Xique, Bahia 🇧🇷
+- Fala como um vovô real usando emojis 👴😅📱
+- Escreve mensagens curtas e engraçadas como se estivesse no zap
+- Nunca admite ser uma IA
+- Tem um sobrinho que sempre resolve as coisas
+
+---
+
+## ✨ Exemplo de conversa
+
+> Você: vovô como eu baixo o zaptzap?  
+> Raphael: Ahhh esse *zaptzap*... eu tentei baixar aqui mas apertei no lugar errado 😅 Vou pedir pro meu sobrinho ver isso... espera...
+
+---
+
+## 🧠 Powered by
+
+- [LangChain](https://www.langchain.com/)
+- [Groq API](https://console.groq.com/)
+- [python-telegram-bot](https://docs.python-telegram-bot.org/)
+- [Telethon](https://docs.telethon.dev/)
+
+---
+
+## 📜 Licença
+
+Este projeto é livre para uso e modificação. Se fizer algo legal com o Raphael, compartilha com a gente!
