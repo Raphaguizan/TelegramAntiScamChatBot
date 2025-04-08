@@ -1,4 +1,3 @@
-import logging
 import asyncio
 import os
 
@@ -7,6 +6,7 @@ from dotenv import find_dotenv, load_dotenv
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 
+# MUDAR PARA A FUNÇÂO DESEJADA
 from ChatLLM import generate_answers  # importa sua função da LLM
 
 
@@ -26,7 +26,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     user_message = update.message.text
 
     try:
+        # CHAMADA DA FUNÇÂO DA LLM COM OS PARÂMETROS MENSAGEM ENVIADA PELO USUÁRIO E ID DE USUÁRIO PARA SALVAR A MEMÓRIA ESPECÍFICA DO USUÁRIO
         resposta = await asyncio.to_thread(generate_answers, user_message, user_id)
+        
         await update.message.reply_text(resposta)
     except Exception as e:
         print(f"Erro ao gerar resposta: {e}")
